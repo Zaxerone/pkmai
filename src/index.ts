@@ -4,7 +4,7 @@ require("./data/DataManager");
 
 getData("abilities")
   .then((abilities: Ability[]) => {
-    console.log("Fetched abilities successfully.");
+    console.log(`✅ \x1b[32mFetched abilities successfully.`);
   })
   .catch((error: any) => {
     console.error("Error fetching abilities:", error);
@@ -17,4 +17,6 @@ async function getPokemonData<T extends Pokemon | Ability>(
   return data;
 }
 
-getPokemonData<Pokemon>("pokedex").then(async (pokemon) => {});
+getPokemonData<Pokemon>("pokedex").then(async (pokemon) => {
+  console.log(`✅ \x1b[32mFetched pokemons successfully`);
+});

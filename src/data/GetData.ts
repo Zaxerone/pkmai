@@ -29,8 +29,6 @@ export async function getData(dataType: "pokedex" | "moves" | "abilities") {
 
   const dataUrl = `https://play.pokemonshowdown.com/data/${filePath}`;
 
-  console.log(dataUrl);
-
   try {
     const response = await fetch(dataUrl);
 
