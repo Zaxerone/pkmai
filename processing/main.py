@@ -1,21 +1,28 @@
 import json
-import numpy as np
-import tensorflow as tf
 import os
 import sys
+import numpy as np
+import tensorflow as tf
 
 sys.stdout.reconfigure(encoding='utf-8')
 
 dirname = os.path.dirname(os.path.abspath(__file__))
-pokedex_path = os.path.join(dirname, '../../pokemon/pokedex.json')
+pokedex_path = os.path.join(dirname, '../pokemon/pokedex.json')
 
 with open(pokedex_path, 'r', encoding='utf-8') as f:
     pokedex = json.load(f)
 
-stats = np.array([[pokemon_data["hp"], pokemon_data["atk"], pokemon_data["def"], pokemon_data["spa"], pokemon_data["spd"], pokemon_data["spe"]]
-                  for pokemon_name, pokemon_data in pokedex.items()])
-
+stats = np.array([[pokemon_data["hp"], pokemon_data["atk"], pokemon_data["def"], pokemon_data["spa"], pokemon_data["spd"], pokemon_data["spe"]] for pokemon_name, pokemon_data in pokedex.items()])
 stats = stats / stats.max(axis=0)
+
+data_list = []
+
+for pokemon_name, pokemon_data in pokedex.items():
+    pokemon_stats = [pokemon_data["hp"], pokemon_data["atk"], pokemon_data["def"], pokemon_data["spa"], pokemon_data["spd"], pokemon_data["spe"]]
+    data_list.append({"name": pokemon_name, "stats": pokemon_stats})
+
+with open("processing/pokemon_data.json", "w", encoding="utf-8") as f:
+    json.dump(data_list, f, indent=4)
 
 model = tf.keras.Sequential([
     tf.keras.layers.Dense(64, activation='relu'),

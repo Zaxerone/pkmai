@@ -50,7 +50,7 @@ export async function getData(dataType: "pokedex" | "moves" | "abilities") {
 
     const pokemonData = JSON.parse(fileData);
     const ouPokemon = Object.values(pokemonData).filter(
-      (pokemon: any) => pokemon.tier === "Uber"
+      (pokemon: any) => pokemon.tier !== "Illegal"
     );
 
     let PokemonObj: { [key: string]: object } = {};

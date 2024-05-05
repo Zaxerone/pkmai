@@ -4,3 +4,4 @@ node_modules/
 out/
 pokemon/pokedex.json
 pokemon/abilities.json
+processing/pokemon_data.json
