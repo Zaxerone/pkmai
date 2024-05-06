@@ -1,5 +1,4 @@
 const VALID_DATA_TYPES = ["pokedex", "moves", "abilities"];
-const { writeFileSync } = require("node:fs");
 
 /**
  * Fetch and return Pokémon Showdown API specified data
@@ -71,8 +70,7 @@ export async function getData(dataType: "pokedex" | "moves" | "abilities") {
         break;
     }
 
-    writeFileSync(`${"./pokemon/" + fileName}`, JSON.stringify(PokemonObj));
-    return PokemonObj;
+    return { fileName: fileName, data: PokemonObj };
   } catch (error) {
     console.error("[ERROR]", error);
     return Promise.reject(error);

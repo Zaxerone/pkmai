@@ -36,7 +36,7 @@ model.fit(stats, stats[:, 0], epochs=100, batch_size=32, verbose=0)
 predictions = model.predict(stats)
 sorted_indices = np.argsort(-predictions.flatten())
 
-print("Le top 10 des pokémons ayant les statistiques de base les plus hautes de tous les tiers sont :")
+print("The top 10 of pokemons with the highest base stats are :")
 for i in range(10):
     pokemon_name = list(pokedex.keys())[sorted_indices[i]]
     print(f'{i+1}. {pokemon_name}')

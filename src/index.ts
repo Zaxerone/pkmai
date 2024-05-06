@@ -1,26 +1,29 @@
 require("./data/DataManager");
 import { spawn } from "child_process";
+import { writeFileSync } from "node:fs";
 const { getData } = require("./data/GetData");
+const colors = require("../debug/colors.js");
 
 getData("abilities")
   .then((abilities: Ability[]) => {
-    console.log(`✅ \x1b[32mFetched abilities successfully.`);
+    console.log(`✅ ${colors.green}Fetched abilities successfully.`);
   })
   .catch((error: any) => {
     console.error("Error fetching abilities:", error);
   });
 
-async function getPokemonData<T extends Pokemon | Ability>(
-  dataType: "pokedex" | "moves" | "abilities"
-): Promise<T[]> {
-  const data = await getData(dataType);
-  return data;
+async function pokedexData() {
+  const pokedex = await getData("pokedex");
+
+  const pokedexData = await JSON.stringify(pokedex.data);
+
+  await writeFileSync(`${"./pokemon/" + pokedex.fileName}`, pokedexData);
+
+  console.log(`✅ ${colors.green}Fetched pokemons successfully`);
+  await runPythonScript("processing/main.py");
 }
 
-getPokemonData<Pokemon>("pokedex").then(async (pokemon) => {
-  console.log(`✅ \x1b[32mFetched pokemons successfully`);
-  await runPythonScript("processing/main.py");
-});
+pokedexData();
 
 async function runPythonScript(scriptPath: string) {
   const pythonProcess = spawn("python", [scriptPath]);
