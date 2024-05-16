@@ -1,7 +1,4 @@
 node_modules/
 .idea
 .venv
-out/
-pokemon/pokedex.json
-pokemon/abilities.json
-processing/pokemon_data.json
+data
